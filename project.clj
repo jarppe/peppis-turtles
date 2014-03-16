@@ -11,7 +11,8 @@
                  [ring-middleware-format "0.3.2"]]
   :source-paths ["src/clj" "src/cljs"]
   :plugins [[lein-cljsbuild "1.0.1"]]
-  :profiles {:dev {:source-paths ^:replace ["src/clj"]}
+  :profiles {:dev {:source-paths ^:replace ["src/clj"]
+                   :cljsbuild {:notify-command ["growlnotify" "-n" "cljsbuild" "-m"]}}
              :srcmap {:cljsbuild {:builds {:client {:compiler {:source-map "target/cljs-client.js.map"
                                                                :source-map-path "client"}}}}}
              :uberjar {:main turtles.server
