@@ -44,6 +44,11 @@
       (set! (.-height canvas) height))
     (set! (.-fillStyle ctx) "rgb(32,32,32)")
     (.fillRect ctx 0 0 width height)
+    (set! (.-textAlign ctx) "center")
+    (set! (.-textBaseline ctx) "bottom")
+    (set! (.-font ctx) "18px sans-serif")
+    (set! (.-fillStyle ctx) "rgb(32,255,32)")
+    (.fillText ctx "Pepin kilpikonnat" (/ width 2) height)
     (doseq [turtle turtles]
       (paint-turtle ctx img turtle))
     (swap! app assoc
