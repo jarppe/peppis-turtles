@@ -20,7 +20,7 @@
   (.restore ctx))
 
 (defn direction [d x y w h]
-  (if (and (< 0 x 500) (< 0 y 500))
+  (if (and (< 0 x w) (< 0 y h))
    d
    (+ d (/ Math/PI -4.0))))
 
@@ -49,16 +49,28 @@
     (swap! app assoc
            :turtles (map (partial move-turtle width height) turtles))))
 
+(defn rand-turtle [w h]
+  {:x (* (rand) w) 
+   :y (* (rand) h)
+   :d (* (rand) (* 2 Math/PI))
+   :v (* (rand) 3)})
+
+(defn rand-turtles [w h]
+  (cons (rand-turtle w h)
+        (lazy-seq (rand-turtles w h))))
+
 (defn main []
   (let [canvas (.getElementById js/document "c")
         ctx    (.getContext canvas "2d")
         img    (doto (js/Image.)
-                 (aset "src" "turtle.png"))]
+                 (aset "src" "turtle.png"))
+        win    js/window
+        width  (.-innerWidth win)
+        height (.-innerHeight win)]
     (reset! app {:canvas  canvas
                  :ctx     ctx
                  :img     img
-                 :turtles [{:x 50  :y 50  :d 0.0 :v 1.0}
-                           {:x 150 :y 250 :d 1.0 :v 1.5}]}))
+                 :turtles (take (+ 3 (rand-int 7)) (rand-turtles width height))}))
   (set-display "loading" "none")
   (set-display "c" "table-cell")
   (.setInterval js/window run 16))
