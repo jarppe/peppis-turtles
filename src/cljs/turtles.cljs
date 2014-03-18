@@ -87,8 +87,7 @@
 (defn main []
   (let [canvas (.getElementById js/document "c")
         ctx    (.getContext canvas "2d")
-        img    (doto (js/Image.)
-                 (aset "src" "turtle.png"))
+        img    (.getElementById js/document "turtle")
         win    js/window
         width  (.-innerWidth win)
         height (.-innerHeight win)]

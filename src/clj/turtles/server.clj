@@ -7,7 +7,7 @@
             [ring.util.http-response :refer [ok content-type] :as resp]
             [ring.middleware.http-response :refer [catch-response]]            
             [ring.middleware.format :refer [wrap-restful-format]]
-            [hiccup.page :refer [html5 include-css include-js]]))
+            [hiccup.page :refer [html5 include-js]]))
 
 (def index-response (-> (html5 [:head
                                 [:meta {:charset "utf-8"}]
@@ -19,7 +19,9 @@
                                      slurp
                                      (s/replace #"\s+" " "))]]
                                [:body
-                                [:div#loading "Loading..."]
+                                [:div#loading
+                                 [:img#turtle {:src "turtle.png"}]
+                                 [:span "Loading..."]]
                                 [:canvas#c {:style "display: none;"}]]
                                (include-js "turtles.js"))
                         (ok)
@@ -28,7 +30,6 @@
 (def app-routes
   [(GET  "/" [] index-response)
    (GET  "/dev/ping" [] (ok "pongs\n"))
-   (GET  "/dev/echo" request (ok (dissoc request :body)))
    (route/resources "/")
    (route/not-found "Not found")])
 
