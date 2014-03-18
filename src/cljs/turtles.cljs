@@ -8,6 +8,7 @@
 (def deg180 Math/PI)
 (def deg90 (/ Math/PI 2.0))
 (def deg45 (/ Math/PI 4.0))
+(def dd-max (* 0.3 (/ Math/PI 180.0)))
 
 (defn rnd [lo hi] (+ lo (rand (- hi lo))))
 
@@ -26,7 +27,8 @@
              3  {:x (rnd -44 (+ w 44))
                  :y (+ h 44)
                  :d d})
-           :v (rnd 1 3))))
+           :v (rnd 1 3)
+           :dd (rnd (- dd-max) dd-max))))
 
 (defn gonez? [w h {:keys [x y]}]
   (not (and (< -44 x (+ w 44))
@@ -40,12 +42,13 @@
   (.restore ctx)
   turtle)
 
-(defn move-turtle [w h {:keys [x y d v] :as turtle}]
+(defn move-turtle [w h {:keys [x y v d dd] :as turtle}]
   (let [dx (Math/sin d)
         dy (- (Math/cos d))]
     (assoc turtle
            :x (+ x (* dx v))
-           :y (+ y (* dy v)))))
+           :y (+ y (* dy v))
+           :d (+ d dd))))
 
 (defn add-turtles [w h turtles]
   (if (< (count turtles) 10)
