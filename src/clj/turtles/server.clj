@@ -50,7 +50,7 @@
 (defn index-data []
   (gzip (index-content)))
 
-(if prod? (def index-data (constantly (index-data))))
+(if prod? (def index-data (memoize index-data)))
 
 (defn index-response []
   (-> (index-data)
