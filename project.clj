@@ -5,11 +5,13 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/clojurescript "0.0-2173"]
+                 [org.clojure/data.codec "0.1.0"]
                  [hiccup "1.0.5"]
                  [ring "1.2.1"]
                  [compojure "1.1.6"]
                  [metosin/ring-http-response "0.3.0"]
-                 [ring-middleware-format "0.3.2"]]
+                 [ring-middleware-format "0.3.2"]
+                 [commons-io/commons-io "2.4"]]
   :source-paths ["src/clj" "src/cljs"]
   :plugins [[lein-cljsbuild "1.0.1"]]
   :profiles {:dev {:source-paths ^:replace ["src/clj"]
@@ -23,7 +25,7 @@
                                                                 :pretty-print false}}}}}}
   :cljsbuild {:builds {:client {:source-paths ["src/cljs"]
                                 :compiler {:output-dir "target/client"
-                                           :output-to "resources/public/turtles.js"
+                                           :output-to "resources/turtles.js"
                                            :pretty-print true}}}}
   :hooks [leiningen.cljsbuild]
   :uberjar-name "turtles.jar"
